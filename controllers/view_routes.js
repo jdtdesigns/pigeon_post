@@ -7,5 +7,10 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/landing.html'));
 });
 
+// GET route to show the register form
+router.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/register_form.html'));
+})
+
 // Export the router
 module.exports = router;
