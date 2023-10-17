@@ -17,5 +17,25 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.post('/login', async (req, res) => {
+  const user = await User.findOne({
+    where: {
+      email: req.body.email
+    }
+  });
+
+  req.session.user_id = user.id;
+
+  res.redirect('/');
+  // try {
+  //   await User.create(req.body);
+
+  //   res.redirect('/');
+  // } catch (error) {
+  //   console.log(error.errors);
+  //   res.redirect('/register');
+  // }
+});
+
 module.exports = router;
 
