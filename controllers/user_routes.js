@@ -6,16 +6,15 @@ const User = require('../models/User.js');
 // localhost:3333/auth/register
 // Post request route that retrieves the form data(email, password) and creates a new user in the database, using our User model
 // The route will respond with a data object with a property of message that says "User added successfully!"
-router.post('/register', (req, res) => {
-  const data = req.body;
+router.post('/register', async (req, res) => {
+  try {
+    await User.create(req.body);
 
-  User.create(data)
-    .then(newUser => {
-      res.json({
-        message: 'User added successfully',
-        user: newUser
-      });
-    });
+    res.redirect('/');
+  } catch (error) {
+    console.log(error.errors);
+    res.redirect('/register');
+  }
 });
 
 module.exports = router;

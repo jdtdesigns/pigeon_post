@@ -24,7 +24,7 @@ app.use('/', view_routes);
 app.use('/auth', user_routes);
 
 // Sync and create tables
-db.sync()
+db.sync({ force: false })
   .then(() => {
     // Start the server and log the port that it started on
     app.listen(PORT, () => console.log('Server is running on port', PORT));
