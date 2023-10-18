@@ -8,7 +8,9 @@ const sequelize = new Sequelize(
   process.env.DB_USERNAME,
   process.env.DB_PASSWORD, {
   host: 'localhost',
-  dialect: 'mysql'
+  dialect: 'mysql',
+  // Turn off SQL logging in the terminal
+  logging: false
 });
 
 // Export the connection object

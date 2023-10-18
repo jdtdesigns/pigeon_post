@@ -8,11 +8,14 @@ const User = require('../models/User.js');
 // The route will respond with a data object with a property of message that says "User added successfully!"
 router.post('/register', async (req, res) => {
   try {
-    await User.create(req.body);
+    const user = await User.create(req.body);
+
+    req.session.user_id = user.id;
 
     res.redirect('/');
   } catch (error) {
-    console.log(error.errors);
+    // Set our session errors array to an array of just Sequelize error message strings
+    req.session.errors = error.errors.map(errObj => errObj.message);
     res.redirect('/register');
   }
 });
@@ -24,18 +27,33 @@ router.post('/login', async (req, res) => {
     }
   });
 
+  // User not found with the email address provided
+  if (!user) {
+    req.session.errors = ['No user found with that email address.'];
+
+    return res.redirect('/login');
+  }
+
+  const pass_is_valid = await user.validatePass(req.body.password);
+
+  // Check if password is invalid
+  if (!pass_is_valid) {
+    req.session.errors = ['Password is incorrect.'];
+
+    return res.redirect('/login');
+  }
+
+  // Log the user in
   req.session.user_id = user.id;
 
   res.redirect('/');
-  // try {
-  //   await User.create(req.body);
-
-  //   res.redirect('/');
-  // } catch (error) {
-  //   console.log(error.errors);
-  //   res.redirect('/register');
-  // }
 });
+
+router.get('/logout', (req, res) => {
+  req.session.destroy();
+
+  res.redirect('/');
+})
 
 module.exports = router;
 

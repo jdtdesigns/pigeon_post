@@ -13,6 +13,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 .row, .column {
   display: flex;
 }
@@ -53,6 +57,10 @@ form {
 
 form h1 {
   text-align: center;
+}
+
+form p.error {
+  color: red;
 }
 
 form > * {
