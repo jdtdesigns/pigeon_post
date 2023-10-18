@@ -33,7 +33,7 @@ router.post('/coo', isAuthenticated, authenticate, async (req, res) => {
     await req.user.addCoo(coo);
 
     res.redirect('/');
-  } catch (err) {
+  } catch (error) {
     req.session.errors = error.errors.map(errObj => errObj.message);
     res.redirect('/coo');
   }
