@@ -29,7 +29,7 @@ app.set('view engine', '.hbs');
 
 // Load session middleware
 app.use(session({
-  secret: 'some secret key',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }));
