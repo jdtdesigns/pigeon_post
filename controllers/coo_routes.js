@@ -3,6 +3,22 @@ const router = require('express').Router();
 const User = require('../models/User');
 const Coo = require('../models/Coo');
 
+// User.findByPk(1, {
+//   include: {
+//     model: Coo,
+//     as: 'coos'
+//   }
+// })
+//   .then(user => console.log(user))
+
+Coo.findByPk(1, {
+  include: {
+    model: User,
+    as: 'author'
+  }
+}).then(coo => console.log(coo.get({ plain: true })));
+
+
 // Block a route if a user is not logged in
 function isAuthenticated(req, res, next) {
   if (!req.session.user_id) {
