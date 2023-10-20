@@ -21,11 +21,11 @@ const app = express();
 // Open the static channel for our browser assets - ie. express.static on the public folder
 app.use(express.static('./public'));
 
-// Allow json to be sent from the client
-// app.use(express.json());
+// Allow urlencoded form data to be sent from the client
 app.use(express.urlencoded({ extended: false }));
 
 // Open middleware for PUT and DELETE methods to be sent through client side forms
+// You will see the ?_method=DELETE or ?_method=PUT parameter on the routes that I use to trigger these requests
 app.use(methodOverride('_method'));
 
 app.engine('.hbs', engine({ extname: '.hbs' }));
