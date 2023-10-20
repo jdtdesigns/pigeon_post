@@ -4,7 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pigeon Post</title>
+  <title>
+    {{#if landing}}Pigeon Post{{/if}}
+    {{#if profile}}Profile - {{user.email}}{{/if}}
+    {{#if edit_form}}Edit Coo - {{coo.id}}{{/if}}
+    {{#if coo_form}}Post a Coo{{/if}}
+    {{#if register}}Register Form{{/if}}
+    {{#if login}}Login Form{{/if}}
+  </title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 

@@ -15,7 +15,8 @@ router.get('/', authenticate, async (req, res) => {
 
   res.render('landing', {
     user: req.user,
-    coos: coos.map(c => c.get({ plain: true }))
+    coos: coos.map(c => c.get({ plain: true })),
+    landing: true
   });
 });
 
@@ -59,7 +60,8 @@ router.get('/coo/edit/:id', isAuthenticated, authenticate, async (req, res) => {
 
   res.render('edit_coo_form', {
     user: req.user,
-    coo: coo.get({ plain: true })
+    coo: coo.get({ plain: true }),
+    edit_form: true
   })
 })
 

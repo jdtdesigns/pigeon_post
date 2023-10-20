@@ -21,7 +21,7 @@ router.post('/register', async (req, res) => {
 
 // Log in a user
 router.post('/login', async (req, res) => {
-  // Find the user by the email address provided on the form
+  // Try and find the user by the email address provided on the form
   const user = await User.findOne({
     where: {
       email: req.body.email
