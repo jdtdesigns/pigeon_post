@@ -27,7 +27,13 @@ async function authenticate(req, res, next) {
 
   if (user_id) {
     const user = await User.findByPk(req.session.user_id, {
-      attributes: ['id', 'email']
+      include: {
+        model: Coo,
+        as: 'coos'
+      },
+      attributes: {
+        exclude: ['password']
+      }
     });
 
     req.user = user.get({ plain: true });
@@ -56,7 +62,8 @@ router.get('/register', isLoggedIn, authenticate, (req, res) => {
   // Render the register form template
   res.render('register_form', {
     errors: req.session.errors,
-    user: req.user
+    user: req.user,
+    register: true
   });
 
   req.session.errors = [];
@@ -67,19 +74,39 @@ router.get('/login', isLoggedIn, authenticate, (req, res) => {
   // Render the register form template
   res.render('login_form', {
     errors: req.session.errors,
-    user: req.user
+    user: req.user,
+    login: true
   });
 
   req.session.errors = [];
 });
 
-// Show Post a Coo page
+// Show Coo Form
 router.get('/coo', isAuthenticated, authenticate, (req, res) => {
   res.render('coo_form', {
-    user: req.user
+    user: req.user,
+    coo_form: true
   });
 
   req.session.errors = [];
+});
+
+// Show Edit Form
+router.get('/coo/edit/:id', isAuthenticated, authenticate, async (req, res) => {
+  const coo = await Coo.findByPk(req.params.id);
+
+  res.render('edit_coo', {
+    user: req.user,
+    coo: coo.get({ plain: true })
+  })
+})
+
+// Show User Profile
+router.get('/profile', isAuthenticated, authenticate, async (req, res) => {
+  res.render('profile', {
+    user: req.user,
+    profile: true
+  })
 });
 
 // Export the router

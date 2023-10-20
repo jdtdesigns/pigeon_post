@@ -11,12 +11,12 @@ const Coo = require('../models/Coo');
 // })
 //   .then(user => console.log(user))
 
-Coo.findByPk(1, {
-  include: {
-    model: User,
-    as: 'author'
-  }
-}).then(coo => console.log(coo.get({ plain: true })));
+// Coo.findByPk(1, {
+//   include: {
+//     model: User,
+//     as: 'author'
+//   }
+// }).then(coo => console.log(coo.get({ plain: true })));
 
 
 // Block a route if a user is not logged in
@@ -54,5 +54,25 @@ router.post('/coo', isAuthenticated, authenticate, async (req, res) => {
     res.redirect('/coo');
   }
 });
+
+// Edit a Coo
+router.put('/coo/:id', isAuthenticated, async (req, res) => {
+  await Coo.update(req.body, {
+    where: {
+      id: req.params.id
+    }
+  });
+
+  res.redirect('/profile');
+});
+
+// Delete a Coo
+router.delete('/coo/:id', isAuthenticated, async (req, res) => {
+  await Coo.destroy({
+    where: { id: req.params.id }
+  });
+
+  res.redirect('/profile');
+})
 
 module.exports = router;

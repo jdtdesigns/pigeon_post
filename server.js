@@ -1,5 +1,6 @@
 // Import express
 const express = require('express');
+const methodOverride = require('method-override');
 const db = require('./config/connection');
 
 const { engine } = require('express-handlebars');
@@ -24,6 +25,9 @@ app.use(express.static('./public'));
 // app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Open middleware for PUT and DELETE methods to be sent through client side forms
+app.use(methodOverride('_method'))
+
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 
@@ -31,7 +35,10 @@ app.set('view engine', '.hbs');
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true
+  }
 }));
 
 // Load our view routes at the root level '/'

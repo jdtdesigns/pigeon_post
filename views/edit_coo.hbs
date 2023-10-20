@@ -1,0 +1,13 @@
+<form class="standard-form" action="/coo/{{coo.id}}?_method=PUT" method="POST">
+  <h1>Edit Coo</h1>
+
+  {{#each errors}}
+  <p class="error text-center">{{this}}</p>
+  {{/each}}
+
+  <input type="text" name="text" placeholder="Type your coo message" value="{{coo.text}}">
+  <button>Submit</button>
+  <a class="cancel-btn" href="/profile">
+    <button>Cancel</button>
+  </a>
+</form>

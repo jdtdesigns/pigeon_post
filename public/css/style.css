@@ -13,7 +13,7 @@ a {
   text-decoration: none;
 }
 
-a:hover {
+a:hover, a.active {
   text-decoration: underline;
 }
 
@@ -37,6 +37,10 @@ a:hover {
   text-align: center;
 }
 
+.main-header {
+  margin-bottom: 25px;
+}
+
 header {
   background: #555;
   color: #fff;
@@ -44,28 +48,42 @@ header {
   margin-bottom: 35px;
 }
 
-header nav > *:not(:last-child) {
-  margin-right: 5px;
+header nav p {
+  margin-right: 30px;
 }
 
-form {
+header nav > *:not(:last-child):not(p) {
+  margin-right: 10px;
+}
+
+form.standard-form {
   width: 380px;
   display: flex;
   flex-direction: column;
   margin: 35px auto 0;
 }
 
-form h1 {
+form.standard-form h1 {
   text-align: center;
 }
 
-form p.error {
+form.standard-form p.error {
   color: red;
 }
 
-form > * {
+form.standard-form > * {
   padding: 7px 10px;
   margin: 5px 0;
+}
+
+form.standard-form a.cancel-btn {
+  padding: 0;
+}
+
+form.standard-form a.cancel-btn button {
+  width: 100%;
+  height: 100%;
+  padding: 7px 10px;
 }
 
 .coo-output {
@@ -73,7 +91,7 @@ form > * {
 }
 
 .coo {
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 
 .coo h3 {
@@ -82,4 +100,36 @@ form > * {
 
 .coo p:first-child {
   margin-right: 25px;
+}
+
+.user-coos { 
+  margin-top: 25px;
+}
+
+.user-coos h2 {
+  margin-bottom: 15px;
+}
+
+.user-coos a, .user-coos button {
+  margin: 0;
+}
+
+.user-coos table td {
+  padding: 8px 4px 6px;
+}
+
+.user-coos table button {
+  padding: 4px 0;
+  width: 75px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.user-coos table button.delete-btn {
+  background: #c12921;
+}
+
+.user-coos table button.edit-btn {
+  background: #e07409;
 }
