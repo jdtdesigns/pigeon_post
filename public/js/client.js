@@ -1,3 +1,5 @@
+// I use an IIFE to keep our code scoped and not globally accessible
+// This is a modular pattern of coding client side JS
 const app = (() => {
   const coosTable = document.querySelector('.user-coos');
 
