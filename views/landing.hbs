@@ -2,7 +2,8 @@
 
 
 <section class="column align-center coo-output">
-  {{#each coos}}
+  {{#if coos}}
+    {{#each coos}}
     <div class="coo">
       <h3 class="text-center">{{text}}</h3>
       <div class="row justify-between">
@@ -10,5 +11,8 @@
         <p>By: {{author.email}}</p>
       </div>
     </div>
-  {{/each}}
+    {{/each}}
+  {{else}}
+    <p>No Coos have been posted by users yet.</p>
+  {{/if}}
 </section>

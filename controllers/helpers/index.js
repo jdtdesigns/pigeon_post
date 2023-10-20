@@ -1,4 +1,5 @@
 const User = require('../../models/User');
+const Coo = require('../../models/Coo');
 
 // Block an auth page if user is already logged in
 function isLoggedIn(req, res, next) {
@@ -23,7 +24,12 @@ async function authenticate(req, res, next) {
   const user_id = req.session.user_id;
 
   if (user_id) {
-    const user = await User.findByPk(req.session.user_id);
+    const user = await User.findByPk(req.session.user_id, {
+      include: {
+        model: Coo,
+        as: 'coos'
+      }
+    });
 
     req.user = user.get({ plain: true });
   }

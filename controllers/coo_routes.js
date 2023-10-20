@@ -12,7 +12,12 @@ router.post('/coo', isAuthenticated, authenticate, async (req, res) => {
 
     res.redirect('/');
   } catch (error) {
-    req.session.errors = error.errors.map(errObj => errObj.message);
+    console.log(error);
+
+    if (error.errors) {
+      req.session.errors = error.errors.map(errObj => errObj.message);
+    }
+
     res.redirect('/coo');
   }
 });

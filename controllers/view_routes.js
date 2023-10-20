@@ -16,7 +16,7 @@ router.get('/', authenticate, async (req, res) => {
   res.render('landing', {
     user: req.user,
     coos: coos.map(c => c.get({ plain: true })),
-    landing: true
+    title: 'Pigeon Post'
   });
 });
 
@@ -26,7 +26,7 @@ router.get('/register', isLoggedIn, authenticate, (req, res) => {
   res.render('register_form', {
     errors: req.session.errors,
     user: req.user,
-    register: true
+    title: 'Register User'
   });
 
   req.session.errors = [];
@@ -38,7 +38,7 @@ router.get('/login', isLoggedIn, authenticate, (req, res) => {
   res.render('login_form', {
     errors: req.session.errors,
     user: req.user,
-    login: true
+    title: 'Log In User'
   });
 
   req.session.errors = [];
@@ -48,7 +48,7 @@ router.get('/login', isLoggedIn, authenticate, (req, res) => {
 router.get('/coo', isAuthenticated, authenticate, (req, res) => {
   res.render('coo_form', {
     user: req.user,
-    coo_form: true
+    title: 'Post a Coo'
   });
 
   req.session.errors = [];
@@ -61,7 +61,7 @@ router.get('/coo/edit/:id', isAuthenticated, authenticate, async (req, res) => {
   res.render('edit_coo_form', {
     user: req.user,
     coo: coo.get({ plain: true }),
-    edit_form: true
+    title: 'Edit Coo - ID ' + coo.id
   })
 })
 
@@ -69,7 +69,7 @@ router.get('/coo/edit/:id', isAuthenticated, authenticate, async (req, res) => {
 router.get('/profile', isAuthenticated, authenticate, async (req, res) => {
   res.render('profile', {
     user: req.user,
-    profile: true
+    title: 'User Profile - ' + req.user.email
   })
 });
 
