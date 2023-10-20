@@ -5,7 +5,6 @@ const User = require('../models/User.js');
 
 // localhost:3333/auth/register
 // Post request route that retrieves the form data(email, password) and creates a new user in the database, using our User model
-// The route will respond with a data object with a property of message that says "User added successfully!"
 router.post('/register', async (req, res) => {
   try {
     const user = await User.create(req.body);
@@ -20,14 +19,16 @@ router.post('/register', async (req, res) => {
   }
 });
 
+// Log in a user
 router.post('/login', async (req, res) => {
+  // Find the user by the email address provided on the form
   const user = await User.findOne({
     where: {
       email: req.body.email
     }
   });
 
-  // User not found with the email address provided
+  // If user is not found with the email address provided, we redirect them back to the login page
   if (!user) {
     req.session.errors = ['No user found with that email address.'];
 
@@ -36,20 +37,23 @@ router.post('/login', async (req, res) => {
 
   const pass_is_valid = await user.validatePass(req.body.password);
 
-  // Check if password is invalid
+  // If the form provided password does not match the db hashed pass, we redirect them back to login
   if (!pass_is_valid) {
     req.session.errors = ['Password is incorrect.'];
 
     return res.redirect('/login');
   }
 
-  // Log the user in
+  // Everything checks out so we log the user in by storing their user id to the session
+  // This generates a store item and will also send a cookie to the client on our response
   req.session.user_id = user.id;
 
   res.redirect('/');
 });
 
+// Log out a user
 router.get('/logout', (req, res) => {
+  // Deletes the session stored data attached to the client side cookie
   req.session.destroy();
 
   res.redirect('/');

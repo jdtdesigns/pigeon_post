@@ -1,48 +1,10 @@
-// Create an express router instance object
 const router = require('express').Router();
 const User = require('../models/User');
 const Coo = require('../models/Coo');
 
-// Block an auth page if user is already logged in
-function isLoggedIn(req, res, next) {
-  if (req.session.user_id) {
-    return res.redirect('/');
-  }
+const { isLoggedIn, isAuthenticated, authenticate } = require('./helpers');
 
-  next();
-}
-
-// Block a route if a user is not logged in
-function isAuthenticated(req, res, next) {
-  if (!req.session.user_id) {
-    return res.redirect('/login');
-  }
-
-  next();
-}
-
-// Attach user data to the request if they are logged in
-async function authenticate(req, res, next) {
-  const user_id = req.session.user_id;
-
-  if (user_id) {
-    const user = await User.findByPk(req.session.user_id, {
-      include: {
-        model: Coo,
-        as: 'coos'
-      },
-      attributes: {
-        exclude: ['password']
-      }
-    });
-
-    req.user = user.get({ plain: true });
-  }
-
-  next();
-}
-
-// Add one test GET route at root - localhost:3333/
+// Show Landing
 router.get('/', authenticate, async (req, res) => {
   const coos = await Coo.findAll({
     include: {
@@ -57,7 +19,7 @@ router.get('/', authenticate, async (req, res) => {
   });
 });
 
-// GET route to show the register form
+// Show the register form
 router.get('/register', isLoggedIn, authenticate, (req, res) => {
   // Render the register form template
   res.render('register_form', {
