@@ -95,7 +95,7 @@ router.get('/coo', isAuthenticated, authenticate, (req, res) => {
 router.get('/coo/edit/:id', isAuthenticated, authenticate, async (req, res) => {
   const coo = await Coo.findByPk(req.params.id);
 
-  res.render('edit_coo', {
+  res.render('edit_coo_form', {
     user: req.user,
     coo: coo.get({ plain: true })
   })
