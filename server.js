@@ -26,7 +26,7 @@ app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: false }));
 
 // Open middleware for PUT and DELETE methods to be sent through client side forms
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
 
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
