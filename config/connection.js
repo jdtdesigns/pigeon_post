@@ -2,13 +2,15 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
+// Create a variable to determine if the app is running on Heroku
 const is_production = process.env.PORT;
 let sequelize;
 
-// Create a new connection instance, using option 3 from the docs
+// If running on Heroku, we pass the Jaws DB URL as our connection
 if (is_production) {
   sequelize = new Sequelize(process.env.JAWSDB_URL);
 } else {
+  // Otherwise, we use the local connection to develop
   sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USERNAME,
