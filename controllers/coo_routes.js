@@ -1,14 +1,16 @@
 const router = require('express').Router();
 const Coo = require('../models/Coo');
+const User = require('../models/User');
 
-const { isAuthenticated, authenticate } = require('./helpers');
+const { isAuthenticated } = require('./helpers');
 
 // Post a Coo
-router.post('/coo', isAuthenticated, authenticate, async (req, res) => {
+router.post('/coo', isAuthenticated, async (req, res) => {
   try {
     const coo = await Coo.create(req.body);
+    const user = await User.findByPk(req.session.user_id);
 
-    await req.user.addCoo(coo);
+    await user.addCoo(coo);
 
     res.redirect('/');
   } catch (error) {
